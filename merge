@@ -10,3 +10,5 @@ proc sql;
             a.fundid=b.fundid and a.MasterFundCode=b.MasterFundCode                                                                                                   
       order by Symbol;      
             quit;
+	  /***delete dups***/
+	  	  proc sort data=data.fund2 nodupkey ;by symbol;run;
