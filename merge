@@ -1,0 +1,12 @@
+proc sql;                                                                                                                                      
+      create table data.fund2 as                                                                                                                
+      select a.symbol,a.FundClassID, a.fundcode, b.*                                                    
+      from                                                                                                                                           
+            data.code1                                                                                                                                  
+            as a ,                                                                                                                                        
+            data.fund1                                                                                                                             
+            as b                                                                                                                             
+      where                                                                                                                                        
+            a.fundid=b.fundid and a.MasterFundCode=b.MasterFundCode                                                                                                   
+      order by Symbol;      
+            quit;
