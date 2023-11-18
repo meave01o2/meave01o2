@@ -1,0 +1,17 @@
+/****字符型转成数值型***/
+data sufe.share1;
+set sufe.share(rename=(enddateshares=Fid FundID=mFundCode symbol=tast TotalBeginningFundShare=par TotalPurchaseFundShare=pav TotalRedemptionFundShare=ran ));
+enddateshares=input(Fid,8.);FundID=input(mFundCode,8.);symbol=input(tast,8.);
+TotalRedemptionFundShare=input(ran,8.);
+TotalBeginningFundShare=input(par,8.);TotalPurchaseFundShare=input(pav,8.);
+drop tast mFundCode Fid ran par pav;
+run;
+
+
+/****字符型转成日期型***/
+data sufe.share1;
+set sufe.share1(rename=(EndDate=date ));
+EndDate=input(Date ,yymmdd10.);
+format EndDate yymmdd10.;
+drop  date ;
+run;
