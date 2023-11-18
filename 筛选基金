@@ -1,0 +1,7 @@
+/**筛选基金**/
+data data.fund1;
+  set data.fund;
+  if CategoryID in ("S0601", "S0604") and
+     isetf = 2 and islof = 2 and IsQDII = 2  and Structrued = 2 and IsUmbrella = 2;/*保留股票型和混合型基金*/
+	if IsActiveOrPassive = 2 then delete;
+run;
