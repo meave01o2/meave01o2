@@ -1,0 +1,25 @@
+/**calculate quarter ret**/
+		data sufe.flows2;set sufe.flows2;
+lagnav=lag(AccumulativeNAV);
+run;
+
+data sufe.flows2;set sufe.flows2;by symbol tradingdate;if first.symbol then lagnav=.;
+ret=(AccumulativeNAV-lagnav)/lagnav;
+run;
+data sufe.flows21;set sufe.flows2;
+lagnav=lag(AccumulativeNAV);
+run;
+data sufe.flows21;set sufe.flows21;by symbol tradingdate;if first.symbol then lagnav=.;
+if lagnav=. then delete;
+ret=(AccumulativeNAV-lagnav)/lagnav;
+run;
+		
+/*calculate flow*/
+data sufe.flows3;set sufe.flows21;
+value=EndDateShares*NAV;
+value1=EndDateShares*AccumulativenAV;
+lagvalue=lag(value);
+run;
+data sufe.flows3;set sufe.flows3;by symbol tradingdate;if first.symbol then lagvalue=.;run;
+data sufe.flows4;set sufe.flows3;flow=value/lagvalue-1-Ret;run;
+proc means data=sufe.flows4; run;
