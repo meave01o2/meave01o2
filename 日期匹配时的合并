@@ -1,0 +1,14 @@
+/***merge nav and fenpei***/
+/*get lagdate*/
+data data.fenpei2;set data.fenpei1;
+lagdate=lag(PrimaryExDividendDate);
+format lagDate yymmdd10.;run;
+proc sort data=data.fenpei2 nodupkey;by symbol PrimaryExDividendDate;run;
+data data.fenpei2;set data.fenpei2;by symbol PrimaryExDividendDate;if first.symbol then lagdate=.;run;
+/*merge*/
+		proc sql;
+    create table data.fenpei3 as
+    select a.*, b.FundID, b.FundClassID,b.PrimaryExDividendDate,b.DividendperShare from data.nav2  as a left join   data.fenpei2 as b
+    on a.symbol=b.symbol and b.lagDate<=a.tradingdate<=b.PrimaryExDividendDate;
+quit;
+proc sort data=data.fenpei3 nodupkey;by symbol tradingdate PrimaryExDividendDate;run;
