@@ -1,0 +1,11 @@
+/***merge 股票持仓***/
+data data.stock;
+set stock01 stock02 stock03 stock04 stock05 stock06 stock07 stock08 stock09 stock010;
+run;
+proc sort data=data.stock; by MasterFundCode enddate;run;
+/**筛选基金持仓季度数据**/
+data data.stock1;
+  set data.stock;
+  if ReportTypeID in ("1", "2","3","4");
+run;
+proc contents data=data.stock1;run;
